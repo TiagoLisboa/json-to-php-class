@@ -1,0 +1,8 @@
+Sem_com_cur: &id_sem_com_cur, periodo, creditos, id_com_cur;
+Plan: &id_plan, nome, dat_cri, dat_exe, id_pro;
+Mod: &id_mod, nome;
+Turma: &id_turma, nome, turno, qtd_alunos, per_atual, id_matriz, id_sem_plan;
+Area: &id_area, nome, id_subarea, id_grupo;
+Matriz: &id_matriz, nome, ano, id_curso;
+Sem_plan: &id_sem_plan, semestre, id_plan;
+Com_cur: id_com_cur, nome, car_hor, id_matriz, id_nucleo, id_area;
