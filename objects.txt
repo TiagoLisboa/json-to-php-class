@@ -1,8 +1,31 @@
 Sem_com_cur: &id_sem_com_cur, periodo, creditos, id_com_cur;
+
 Plan: &id_plan, nome, dat_cri, dat_exe, id_pro;
+
 Mod: &id_mod, nome;
+
 Turma: &id_turma, nome, turno, qtd_alunos, per_atual, id_matriz, id_sem_plan;
+
 Area: &id_area, nome, id_subarea, id_grupo;
+
 Matriz: &id_matriz, nome, ano, id_curso;
+
 Sem_plan: &id_sem_plan, semestre, id_plan;
-Com_cur: id_com_cur, nome, car_hor, id_matriz, id_nucleo, id_area;
+
+Com_cur: &id_com_cur, nome, car_hor, id_matriz, id_nucleo, id_dis;
+
+Vaga: &id_vaga, creditos, id_turma, id_com_cur, id_sem_plan, id_pro;
+
+Pro: &id_pro, nome, matricula, car_hor, dir_aca, senha;
+
+Curso: &id_curso, nome, id_mod;
+
+Ofer: id_plan, id_matriz, qtd_sem, sem_ini, turno, numero;
+
+Grupo: &id_grupo, nome, id_coordenador;
+
+Disciplina: &id_dis, nome, car_hor, id_area;
+
+Pro_grupo: id_pro, id_grupo;
+
+Nucleo: &id_nucleo, nome;
