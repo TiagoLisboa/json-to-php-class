@@ -1,9 +1,3 @@
-FILE_SOURCE = 'objects.txt'
-
-objects = open (FILE_SOURCE, 'r').read()
-
-#tel = {'jack': 4098, 'sape': 4139}
-
 def generate_dictionary(file):
     
     out = {}
@@ -23,5 +17,3 @@ def generate_dictionary(file):
         out[temp_key] = temp_value
         
     return out
-
-print(generate_dictionary(objects))

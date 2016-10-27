@@ -1,16 +1,4 @@
-classes = {}
-classes['Sem_com_cur'] = ['&id_sem_com_cur', 'periodo', 'creditos', 'id_com_cur']
-classes['Plan'] = ['&id_plan', 'nome', 'dat_cri', 'dat_exe', 'id_pro']
-classes['Mod'] = ['&id_mod', 'nome']
-classes['Turma'] = ['&id_turma', 'nome', 'turno', 'qtd_alunos', 'per_atual', 'id_matriz', 'id_sem_plan']
-classes['Area'] = ['&id_area', 'nome', 'id_subarea', 'id_grupo']
-classes['Matriz'] = ['&id_matriz', 'nome', 'ano', 'id_curso']
-classes['Sem_plan'] = ['&id_sem_plan', 'semestre', 'id_plan']
-classes['Com_cur'] = ['id_com_cur', 'nome', 'car_hor', 'id_matriz', 'id_nucleo', 'id_area']
-
-
-
-def gerarVO (m):
+def gerarVO (classes, m):
 
 	TAB = "   "
 
@@ -72,6 +60,3 @@ def gerarVO (m):
 		f.write("?>\n\n")
 		if m == "m":
 			f.close()
-
-
-gerarVO("m")
