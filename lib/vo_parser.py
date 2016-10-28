@@ -54,7 +54,22 @@ def gen_vo (classes, m):
 			f.write (TAB + "public function set" + atributo.capitalize() + " " + "("+ "$" + atributo +"){\n")
 			f.write(TAB + TAB)
 			f.write("$this->" + atributo + " = " + "$" + atributo + ";\n")
-			f.write(TAB + "}\n\n")		
+			f.write(TAB + "}\n\n")
+
+		# Escrever jsonSerialize()	
+		f.write (TAB + "public function jsonSerialize(){\n")
+		f.write(TAB + TAB)
+		f.write("return [\n")
+		for i, atributo in enumerate(classes[classe]):
+			atributo = atributo.replace("&", "")
+			f.write(TAB + TAB + TAB)
+			f.write("\"" + atributo + "\" => $this->" + atributo)
+			if i < len(classes[classe])-1:
+				f.write(",\n")
+			else:
+				f.write("\n")
+		f.write (TAB + TAB + "];\n")
+		f.write (TAB + "}\n")
 
 		f.write("}\n\n\n")
 		f.write("?>\n\n")
