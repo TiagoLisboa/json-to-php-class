@@ -104,14 +104,13 @@ def gen_dao(classes, m):
 
 ##########################################################################
 
+		attr = classes[classe]
+
 		f.write(TAB) # Inicio do delete
 		for a in attr:
 			if a[0] == "&":
 				a = a.replace("&", "")
 				f.write("public static function delete ($" + a + ") { \n")
-
-				attr = classes[classe]
-
 				f.write(TAB + TAB)
 				f.write("$con = Conexao::connect();\n\n")
 
@@ -158,6 +157,7 @@ def gen_dao(classes, m):
 		f.write("while ($i = mysqli_fetch_array($resultado)) {\n")
 		f.write(TAB + TAB + TAB + TAB)
 		f.write("array_push($array, new " + classe + "(")
+
 		for i,a in enumerate(attr):
 			if (a[0] == "&"):
 				a = a.replace("&", "")
@@ -168,18 +168,66 @@ def gen_dao(classes, m):
 				f.write("));\n")
 		f.write(TAB + TAB + TAB)
 		f.write("}\n")
+		f.write(TAB + TAB + TAB)
+		f.write("return $array;\n")
 		f.write(TAB + TAB)
 		f.write("}\n\n")
-
 
 		f.write(TAB + TAB)
 		f.write("Conexao::close();\n")
 		f.write(TAB)
 		f.write("}\n\n") # Fim do getAll
 
-
 ##########################################################################
 
+		f.write(TAB) # Inicio do delete
+
+		attr = classes[classe]
+
+		for a in attr:
+			if a[0] == "&":
+				a = a.replace("&", "")
+				f.write("public static function getById ($"+ a +") { \n")
+
+				f.write(TAB + TAB)
+				f.write("$con = Conexao::connect();\n\n")
+
+				# Cria o comando sql
+				f.write(TAB + TAB)
+				f.write("$sql = \"SELECT * FROM " + classe.lower() + " WHERE " + a + " = $" + a + "\";\n")
+
+				f.write(TAB + TAB)
+				f.write("$resultado = mysqli_query($con, $sql);\n")
+
+				f.write(TAB + TAB)
+				f.write("if(!$resultado) {echo mysqli_error ($con);} \n")
+				f.write(TAB + TAB)
+				f.write("else {\n")
+				f.write(TAB + TAB + TAB)
+				f.write("$i = mysqli_fetch_array($resultado)\n")
+				f.write(TAB + TAB + TAB)
+				f.write("$array = new " + classe + "(")
+
+				for i,a in enumerate(attr):
+					if (a[0] == "&"):
+						a = a.replace("&", "")
+					f.write("$i[\'" + a + "\']")
+					if i < len(attr)-1:
+						f.write(", ")
+					else:
+						f.write(");\n")
+				f.write(TAB + TAB + TAB)
+				f.write("return $array;\n")
+				f.write(TAB + TAB)
+				f.write("}\n\n")
+
+				f.write(TAB + TAB)
+				f.write("Conexao::close();\n")
+				f.write(TAB)
+				f.write("}\n\n") # Fim do getAll
+
+##########################################################################
+		
 		f.write("}\n\n") # Fim da classe
 
 

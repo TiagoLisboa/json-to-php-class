@@ -1,5 +1,108 @@
 <?php
 
+class Curso implements JsonSerializable { 
+   private $id_curso;
+   private $nome;
+   private $id_mod;
+
+   public function __construct($nome, $id_mod, $id_curso = 0) {
+      $this->nome = $nome;
+      $this->id_mod = $id_mod;
+      $this->id_curso = $id_curso;
+   }
+   public function getNome (){
+      return $this->nome;
+   }
+
+   public function setNome ($nome){
+      $this->nome = $nome;
+   }
+
+   public function getId_mod (){
+      return $this->id_mod;
+   }
+
+   public function setId_mod ($id_mod){
+      $this->id_mod = $id_mod;
+   }
+
+   public function getId_curso (){
+      return $this->id_curso;
+   }
+
+   public function setId_curso ($id_curso){
+      $this->id_curso = $id_curso;
+   }
+
+}
+
+
+?>
+
+<?php
+
+class Mod implements JsonSerializable { 
+   private $id_mod;
+   private $nome;
+
+   public function __construct($nome, $id_mod = 0) {
+      $this->nome = $nome;
+      $this->id_mod = $id_mod;
+   }
+   public function getNome (){
+      return $this->nome;
+   }
+
+   public function setNome ($nome){
+      $this->nome = $nome;
+   }
+
+   public function getId_mod (){
+      return $this->id_mod;
+   }
+
+   public function setId_mod ($id_mod){
+      $this->id_mod = $id_mod;
+   }
+
+}
+
+
+?>
+
+<?php
+
+class Pro_grupo implements JsonSerializable { 
+   private $id_pro;
+   private $id_grupo;
+
+   public function __construct($id_pro, $id_grupo) {
+      $this->id_pro = $id_pro;
+      $this->id_grupo = $id_grupo;
+   }
+   public function getId_pro (){
+      return $this->id_pro;
+   }
+
+   public function setId_pro ($id_pro){
+      $this->id_pro = $id_pro;
+   }
+
+   public function getId_grupo (){
+      return $this->id_grupo;
+   }
+
+   public function setId_grupo ($id_grupo){
+      $this->id_grupo = $id_grupo;
+   }
+
+}
+
+
+?>
+
+<?php
+
 class Com_cur implements JsonSerializable { 
    private $id_com_cur;
    private $nome;
@@ -71,21 +174,13 @@ class Com_cur implements JsonSerializable {
 
 <?php
 
-class Pro implements JsonSerializable { 
-   private $id_pro;
+class Nucleo implements JsonSerializable { 
+   private $id_nucleo;
    private $nome;
-   private $matricula;
-   private $car_hor;
-   private $dir_aca;
-   private $senha;
 
-   public function __construct($nome, $matricula, $car_hor, $dir_aca, $senha, $id_pro = 0) {
+   public function __construct($nome, $id_nucleo = 0) {
       $this->nome = $nome;
-      $this->matricula = $matricula;
-      $this->car_hor = $car_hor;
-      $this->dir_aca = $dir_aca;
-      $this->senha = $senha;
-      $this->id_pro = $id_pro;
+      $this->id_nucleo = $id_nucleo;
    }
    public function getNome (){
       return $this->nome;
@@ -95,309 +190,12 @@ class Pro implements JsonSerializable {
       $this->nome = $nome;
    }
 
-   public function getMatricula (){
-      return $this->matricula;
+   public function getId_nucleo (){
+      return $this->id_nucleo;
    }
 
-   public function setMatricula ($matricula){
-      $this->matricula = $matricula;
-   }
-
-   public function getCar_hor (){
-      return $this->car_hor;
-   }
-
-   public function setCar_hor ($car_hor){
-      $this->car_hor = $car_hor;
-   }
-
-   public function getDir_aca (){
-      return $this->dir_aca;
-   }
-
-   public function setDir_aca ($dir_aca){
-      $this->dir_aca = $dir_aca;
-   }
-
-   public function getSenha (){
-      return $this->senha;
-   }
-
-   public function setSenha ($senha){
-      $this->senha = $senha;
-   }
-
-   public function getId_pro (){
-      return $this->id_pro;
-   }
-
-   public function setId_pro ($id_pro){
-      $this->id_pro = $id_pro;
-   }
-
-}
-
-
-?>
-
-<?php
-
-class Vaga implements JsonSerializable { 
-   private $id_vaga;
-   private $creditos;
-   private $id_turma;
-   private $id_com_cur;
-   private $id_sem_plan;
-   private $id_pro;
-
-   public function __construct($creditos, $id_turma, $id_com_cur, $id_sem_plan, $id_pro, $id_vaga = 0) {
-      $this->creditos = $creditos;
-      $this->id_turma = $id_turma;
-      $this->id_com_cur = $id_com_cur;
-      $this->id_sem_plan = $id_sem_plan;
-      $this->id_pro = $id_pro;
-      $this->id_vaga = $id_vaga;
-   }
-   public function getCreditos (){
-      return $this->creditos;
-   }
-
-   public function setCreditos ($creditos){
-      $this->creditos = $creditos;
-   }
-
-   public function getId_turma (){
-      return $this->id_turma;
-   }
-
-   public function setId_turma ($id_turma){
-      $this->id_turma = $id_turma;
-   }
-
-   public function getId_com_cur (){
-      return $this->id_com_cur;
-   }
-
-   public function setId_com_cur ($id_com_cur){
-      $this->id_com_cur = $id_com_cur;
-   }
-
-   public function getId_sem_plan (){
-      return $this->id_sem_plan;
-   }
-
-   public function setId_sem_plan ($id_sem_plan){
-      $this->id_sem_plan = $id_sem_plan;
-   }
-
-   public function getId_pro (){
-      return $this->id_pro;
-   }
-
-   public function setId_pro ($id_pro){
-      $this->id_pro = $id_pro;
-   }
-
-   public function getId_vaga (){
-      return $this->id_vaga;
-   }
-
-   public function setId_vaga ($id_vaga){
-      $this->id_vaga = $id_vaga;
-   }
-
-}
-
-
-?>
-
-<?php
-
-class Disciplina implements JsonSerializable { 
-   private $id_dis;
-   private $nome;
-   private $car_hor;
-   private $id_area;
-
-   public function __construct($nome, $car_hor, $id_area, $id_dis = 0) {
-      $this->nome = $nome;
-      $this->car_hor = $car_hor;
-      $this->id_area = $id_area;
-      $this->id_dis = $id_dis;
-   }
-   public function getNome (){
-      return $this->nome;
-   }
-
-   public function setNome ($nome){
-      $this->nome = $nome;
-   }
-
-   public function getCar_hor (){
-      return $this->car_hor;
-   }
-
-   public function setCar_hor ($car_hor){
-      $this->car_hor = $car_hor;
-   }
-
-   public function getId_area (){
-      return $this->id_area;
-   }
-
-   public function setId_area ($id_area){
-      $this->id_area = $id_area;
-   }
-
-   public function getId_dis (){
-      return $this->id_dis;
-   }
-
-   public function setId_dis ($id_dis){
-      $this->id_dis = $id_dis;
-   }
-
-}
-
-
-?>
-
-<?php
-
-class Mod implements JsonSerializable { 
-   private $id_mod;
-   private $nome;
-
-   public function __construct($nome, $id_mod = 0) {
-      $this->nome = $nome;
-      $this->id_mod = $id_mod;
-   }
-   public function getNome (){
-      return $this->nome;
-   }
-
-   public function setNome ($nome){
-      $this->nome = $nome;
-   }
-
-   public function getId_mod (){
-      return $this->id_mod;
-   }
-
-   public function setId_mod ($id_mod){
-      $this->id_mod = $id_mod;
-   }
-
-}
-
-
-?>
-
-<?php
-
-class Ofer implements JsonSerializable { 
-   private $id_plan;
-   private $id_matriz;
-   private $qtd_sem;
-   private $sem_ini;
-   private $turno;
-   private $numero;
-
-   public function __construct($id_plan, $id_matriz, $qtd_sem, $sem_ini, $turno, $numero) {
-      $this->id_plan = $id_plan;
-      $this->id_matriz = $id_matriz;
-      $this->qtd_sem = $qtd_sem;
-      $this->sem_ini = $sem_ini;
-      $this->turno = $turno;
-      $this->numero = $numero;
-   }
-   public function getId_plan (){
-      return $this->id_plan;
-   }
-
-   public function setId_plan ($id_plan){
-      $this->id_plan = $id_plan;
-   }
-
-   public function getId_matriz (){
-      return $this->id_matriz;
-   }
-
-   public function setId_matriz ($id_matriz){
-      $this->id_matriz = $id_matriz;
-   }
-
-   public function getQtd_sem (){
-      return $this->qtd_sem;
-   }
-
-   public function setQtd_sem ($qtd_sem){
-      $this->qtd_sem = $qtd_sem;
-   }
-
-   public function getSem_ini (){
-      return $this->sem_ini;
-   }
-
-   public function setSem_ini ($sem_ini){
-      $this->sem_ini = $sem_ini;
-   }
-
-   public function getTurno (){
-      return $this->turno;
-   }
-
-   public function setTurno ($turno){
-      $this->turno = $turno;
-   }
-
-   public function getNumero (){
-      return $this->numero;
-   }
-
-   public function setNumero ($numero){
-      $this->numero = $numero;
-   }
-
-}
-
-
-?>
-
-<?php
-
-class Curso implements JsonSerializable { 
-   private $id_curso;
-   private $nome;
-   private $id_mod;
-
-   public function __construct($nome, $id_mod, $id_curso = 0) {
-      $this->nome = $nome;
-      $this->id_mod = $id_mod;
-      $this->id_curso = $id_curso;
-   }
-   public function getNome (){
-      return $this->nome;
-   }
-
-   public function setNome ($nome){
-      $this->nome = $nome;
-   }
-
-   public function getId_mod (){
-      return $this->id_mod;
-   }
-
-   public function setId_mod ($id_mod){
-      $this->id_mod = $id_mod;
-   }
-
-   public function getId_curso (){
-      return $this->id_curso;
-   }
-
-   public function setId_curso ($id_curso){
-      $this->id_curso = $id_curso;
+   public function setId_nucleo ($id_nucleo){
+      $this->id_nucleo = $id_nucleo;
    }
 
 }
@@ -489,79 +287,68 @@ class Sem_plan implements JsonSerializable {
 
 <?php
 
-class Area implements JsonSerializable { 
-   private $id_area;
-   private $nome;
-   private $id_subarea;
-   private $id_grupo;
+class Ofer implements JsonSerializable { 
+   private $id_plan;
+   private $id_matriz;
+   private $qtd_sem;
+   private $sem_ini;
+   private $turno;
+   private $numero;
 
-   public function __construct($nome, $id_subarea, $id_grupo, $id_area = 0) {
-      $this->nome = $nome;
-      $this->id_subarea = $id_subarea;
-      $this->id_grupo = $id_grupo;
-      $this->id_area = $id_area;
+   public function __construct($id_plan, $id_matriz, $qtd_sem, $sem_ini, $turno, $numero) {
+      $this->id_plan = $id_plan;
+      $this->id_matriz = $id_matriz;
+      $this->qtd_sem = $qtd_sem;
+      $this->sem_ini = $sem_ini;
+      $this->turno = $turno;
+      $this->numero = $numero;
    }
-   public function getNome (){
-      return $this->nome;
-   }
-
-   public function setNome ($nome){
-      $this->nome = $nome;
-   }
-
-   public function getId_subarea (){
-      return $this->id_subarea;
+   public function getId_plan (){
+      return $this->id_plan;
    }
 
-   public function setId_subarea ($id_subarea){
-      $this->id_subarea = $id_subarea;
+   public function setId_plan ($id_plan){
+      $this->id_plan = $id_plan;
    }
 
-   public function getId_grupo (){
-      return $this->id_grupo;
+   public function getId_matriz (){
+      return $this->id_matriz;
    }
 
-   public function setId_grupo ($id_grupo){
-      $this->id_grupo = $id_grupo;
+   public function setId_matriz ($id_matriz){
+      $this->id_matriz = $id_matriz;
    }
 
-   public function getId_area (){
-      return $this->id_area;
+   public function getQtd_sem (){
+      return $this->qtd_sem;
    }
 
-   public function setId_area ($id_area){
-      $this->id_area = $id_area;
+   public function setQtd_sem ($qtd_sem){
+      $this->qtd_sem = $qtd_sem;
    }
 
-}
-
-
-?>
-
-<?php
-
-class Nucleo implements JsonSerializable { 
-   private $id_nucleo;
-   private $nome;
-
-   public function __construct($nome, $id_nucleo = 0) {
-      $this->nome = $nome;
-      $this->id_nucleo = $id_nucleo;
-   }
-   public function getNome (){
-      return $this->nome;
+   public function getSem_ini (){
+      return $this->sem_ini;
    }
 
-   public function setNome ($nome){
-      $this->nome = $nome;
+   public function setSem_ini ($sem_ini){
+      $this->sem_ini = $sem_ini;
    }
 
-   public function getId_nucleo (){
-      return $this->id_nucleo;
+   public function getTurno (){
+      return $this->turno;
    }
 
-   public function setId_nucleo ($id_nucleo){
-      $this->id_nucleo = $id_nucleo;
+   public function setTurno ($turno){
+      $this->turno = $turno;
+   }
+
+   public function getNumero (){
+      return $this->numero;
+   }
+
+   public function setNumero ($numero){
+      $this->numero = $numero;
    }
 
 }
@@ -622,28 +409,99 @@ class Sem_com_cur implements JsonSerializable {
 
 <?php
 
-class Pro_grupo implements JsonSerializable { 
-   private $id_pro;
-   private $id_grupo;
+class Matriz implements JsonSerializable { 
+   private $id_matriz;
+   private $nome;
+   private $ano;
+   private $id_curso;
 
-   public function __construct($id_pro, $id_grupo) {
-      $this->id_pro = $id_pro;
-      $this->id_grupo = $id_grupo;
+   public function __construct($nome, $ano, $id_curso, $id_matriz = 0) {
+      $this->nome = $nome;
+      $this->ano = $ano;
+      $this->id_curso = $id_curso;
+      $this->id_matriz = $id_matriz;
    }
-   public function getId_pro (){
-      return $this->id_pro;
-   }
-
-   public function setId_pro ($id_pro){
-      $this->id_pro = $id_pro;
-   }
-
-   public function getId_grupo (){
-      return $this->id_grupo;
+   public function getNome (){
+      return $this->nome;
    }
 
-   public function setId_grupo ($id_grupo){
-      $this->id_grupo = $id_grupo;
+   public function setNome ($nome){
+      $this->nome = $nome;
+   }
+
+   public function getAno (){
+      return $this->ano;
+   }
+
+   public function setAno ($ano){
+      $this->ano = $ano;
+   }
+
+   public function getId_curso (){
+      return $this->id_curso;
+   }
+
+   public function setId_curso ($id_curso){
+      $this->id_curso = $id_curso;
+   }
+
+   public function getId_matriz (){
+      return $this->id_matriz;
+   }
+
+   public function setId_matriz ($id_matriz){
+      $this->id_matriz = $id_matriz;
+   }
+
+}
+
+
+?>
+
+<?php
+
+class Disciplina implements JsonSerializable { 
+   private $id_dis;
+   private $nome;
+   private $car_hor;
+   private $id_area;
+
+   public function __construct($nome, $car_hor, $id_area, $id_dis = 0) {
+      $this->nome = $nome;
+      $this->car_hor = $car_hor;
+      $this->id_area = $id_area;
+      $this->id_dis = $id_dis;
+   }
+   public function getNome (){
+      return $this->nome;
+   }
+
+   public function setNome ($nome){
+      $this->nome = $nome;
+   }
+
+   public function getCar_hor (){
+      return $this->car_hor;
+   }
+
+   public function setCar_hor ($car_hor){
+      $this->car_hor = $car_hor;
+   }
+
+   public function getId_area (){
+      return $this->id_area;
+   }
+
+   public function setId_area ($id_area){
+      $this->id_area = $id_area;
+   }
+
+   public function getId_dis (){
+      return $this->id_dis;
+   }
+
+   public function setId_dis ($id_dis){
+      $this->id_dis = $id_dis;
    }
 
 }
@@ -734,57 +592,6 @@ class Turma implements JsonSerializable {
 
 <?php
 
-class Matriz implements JsonSerializable { 
-   private $id_matriz;
-   private $nome;
-   private $ano;
-   private $id_curso;
-
-   public function __construct($nome, $ano, $id_curso, $id_matriz = 0) {
-      $this->nome = $nome;
-      $this->ano = $ano;
-      $this->id_curso = $id_curso;
-      $this->id_matriz = $id_matriz;
-   }
-   public function getNome (){
-      return $this->nome;
-   }
-
-   public function setNome ($nome){
-      $this->nome = $nome;
-   }
-
-   public function getAno (){
-      return $this->ano;
-   }
-
-   public function setAno ($ano){
-      $this->ano = $ano;
-   }
-
-   public function getId_curso (){
-      return $this->id_curso;
-   }
-
-   public function setId_curso ($id_curso){
-      $this->id_curso = $id_curso;
-   }
-
-   public function getId_matriz (){
-      return $this->id_matriz;
-   }
-
-   public function setId_matriz ($id_matriz){
-      $this->id_matriz = $id_matriz;
-   }
-
-}
-
-
-?>
-
-<?php
-
 class Plan implements JsonSerializable { 
    private $id_plan;
    private $nome;
@@ -837,6 +644,199 @@ class Plan implements JsonSerializable {
 
    public function setId_plan ($id_plan){
       $this->id_plan = $id_plan;
+   }
+
+}
+
+
+?>
+
+<?php
+
+class Area implements JsonSerializable { 
+   private $id_area;
+   private $nome;
+   private $id_subarea;
+   private $id_grupo;
+
+   public function __construct($nome, $id_subarea, $id_grupo, $id_area = 0) {
+      $this->nome = $nome;
+      $this->id_subarea = $id_subarea;
+      $this->id_grupo = $id_grupo;
+      $this->id_area = $id_area;
+   }
+   public function getNome (){
+      return $this->nome;
+   }
+
+   public function setNome ($nome){
+      $this->nome = $nome;
+   }
+
+   public function getId_subarea (){
+      return $this->id_subarea;
+   }
+
+   public function setId_subarea ($id_subarea){
+      $this->id_subarea = $id_subarea;
+   }
+
+   public function getId_grupo (){
+      return $this->id_grupo;
+   }
+
+   public function setId_grupo ($id_grupo){
+      $this->id_grupo = $id_grupo;
+   }
+
+   public function getId_area (){
+      return $this->id_area;
+   }
+
+   public function setId_area ($id_area){
+      $this->id_area = $id_area;
+   }
+
+}
+
+
+?>
+
+<?php
+
+class Vaga implements JsonSerializable { 
+   private $id_vaga;
+   private $creditos;
+   private $id_turma;
+   private $id_com_cur;
+   private $id_sem_plan;
+   private $id_pro;
+
+   public function __construct($creditos, $id_turma, $id_com_cur, $id_sem_plan, $id_pro, $id_vaga = 0) {
+      $this->creditos = $creditos;
+      $this->id_turma = $id_turma;
+      $this->id_com_cur = $id_com_cur;
+      $this->id_sem_plan = $id_sem_plan;
+      $this->id_pro = $id_pro;
+      $this->id_vaga = $id_vaga;
+   }
+   public function getCreditos (){
+      return $this->creditos;
+   }
+
+   public function setCreditos ($creditos){
+      $this->creditos = $creditos;
+   }
+
+   public function getId_turma (){
+      return $this->id_turma;
+   }
+
+   public function setId_turma ($id_turma){
+      $this->id_turma = $id_turma;
+   }
+
+   public function getId_com_cur (){
+      return $this->id_com_cur;
+   }
+
+   public function setId_com_cur ($id_com_cur){
+      $this->id_com_cur = $id_com_cur;
+   }
+
+   public function getId_sem_plan (){
+      return $this->id_sem_plan;
+   }
+
+   public function setId_sem_plan ($id_sem_plan){
+      $this->id_sem_plan = $id_sem_plan;
+   }
+
+   public function getId_pro (){
+      return $this->id_pro;
+   }
+
+   public function setId_pro ($id_pro){
+      $this->id_pro = $id_pro;
+   }
+
+   public function getId_vaga (){
+      return $this->id_vaga;
+   }
+
+   public function setId_vaga ($id_vaga){
+      $this->id_vaga = $id_vaga;
+   }
+
+}
+
+
+?>
+
+<?php
+
+class Pro implements JsonSerializable { 
+   private $id_pro;
+   private $nome;
+   private $matricula;
+   private $car_hor;
+   private $dir_aca;
+   private $senha;
+
+   public function __construct($nome, $matricula, $car_hor, $dir_aca, $senha, $id_pro = 0) {
+      $this->nome = $nome;
+      $this->matricula = $matricula;
+      $this->car_hor = $car_hor;
+      $this->dir_aca = $dir_aca;
+      $this->senha = $senha;
+      $this->id_pro = $id_pro;
+   }
+   public function getNome (){
+      return $this->nome;
+   }
+
+   public function setNome ($nome){
+      $this->nome = $nome;
+   }
+
+   public function getMatricula (){
+      return $this->matricula;
+   }
+
+   public function setMatricula ($matricula){
+      $this->matricula = $matricula;
+   }
+
+   public function getCar_hor (){
+      return $this->car_hor;
+   }
+
+   public function setCar_hor ($car_hor){
+      $this->car_hor = $car_hor;
+   }
+
+   public function getDir_aca (){
+      return $this->dir_aca;
+   }
+
+   public function setDir_aca ($dir_aca){
+      $this->dir_aca = $dir_aca;
+   }
+
+   public function getSenha (){
+      return $this->senha;
+   }
+
+   public function setSenha ($senha){
+      $this->senha = $senha;
+   }
+
+   public function getId_pro (){
+      return $this->id_pro;
+   }
+
+   public function setId_pro ($id_pro){
+      $this->id_pro = $id_pro;
    }
 
 }
