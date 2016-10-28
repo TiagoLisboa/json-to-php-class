@@ -87,7 +87,7 @@ def gen_dao(classes, m):
 					f.write(", ")
 			else:
 				a = a.replace("&", "")
-				f.write("WHERE " + a + " = \'$" + a + '\'')
+				f.write(" WHERE " + a + " = \'$" + a + '\'')
 		f.write("\";\n\n")
 
 		f.write(TAB + TAB)
@@ -104,6 +104,41 @@ def gen_dao(classes, m):
 
 
 		f.write("}\n\n") # Fim da classe
+
+
+##########################################################################
+
+		f.write(TAB) # Inicio do delete
+		for a in attr:
+			if a[0] == "&":
+				a = a.replace("&", "")
+				f.write("public static function delete ($" + a + ") { \n")
+
+				attr = classes[classe]
+
+				f.write(TAB + TAB)
+				f.write("$con = Conexao::connect();\n\n")
+
+				# Cria o comando sql
+				f.write(TAB + TAB)
+				f.write("$sql = \"DELETE FROM " + classe.lower() + " WHERE " + a + " = \'$" + a + "\'")
+				f.write("\";\n\n")
+
+				f.write(TAB + TAB)
+				f.write("$resultado = mysqli_query($con, $sql);\n")
+
+				f.write(TAB + TAB)
+				f.write("if(!$resultado) {echo mysqli_error ($con);} \n\n")
+
+				f.write(TAB + TAB)
+				f.write("Conexao::close();\n")
+				f.write(TAB)
+				f.write("}\n\n") # Fim do delete
+
+
+
+		f.write("}\n\n") # Fim da classe
+
 
 		if m == "m":
 			f.write("?>")
