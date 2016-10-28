@@ -1,13 +1,20 @@
-def gen_dao(classes, m):
+import os
+
+
+def gen_dao(classes, m, folder):
 	TAB = "   "
 
+	if folder != "":
+		folder  = folder + "/"
+		# os.makedirs(folder)
+
 	if m == "s":
-		f = open("classesDAO.php", "w")
+		f = open(folder + "classesDAO.php", "w")
 		f.write("<?php\n")
 
 	for classe in classes:
 		if m == "m":
-			f = open(classe+".php", "w")
+			f = open(folder + classe+"DAO'.php", "w")
 			f.write("<?php\n")
 
 

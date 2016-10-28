@@ -1,12 +1,18 @@
-def gen_vo (classes, m):
+import os
+
+def gen_vo (classes, m, folder):
+	if folder != "" and not os.path.exists(folder):
+		os.makedirs(folder)
+		folder  = folder + "/"
+
 	TAB = "   "
 	
 	if m == "s":
-		f = open("classes.php", "w")
+		f = open(folder + "classes.php", "w")
 		
 	for classe in classes:
 		if (m == "m"):
-			f = open(classe+".php", "w")
+			f = open(folder  + classe+".php", "w")
 		f.write("<?php\n\n")
 		f.write("class "+ classe + " implements JsonSerializable { \n")
 		
