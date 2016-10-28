@@ -102,10 +102,6 @@ def gen_dao(classes, m):
 		f.write("}\n\n") # Fim do update
 
 
-
-		f.write("}\n\n") # Fim da classe
-
-
 ##########################################################################
 
 		f.write(TAB) # Inicio do delete
@@ -135,7 +131,54 @@ def gen_dao(classes, m):
 				f.write(TAB)
 				f.write("}\n\n") # Fim do delete
 
+##########################################################################
 
+		f.write(TAB) # Inicio do getAll
+		f.write("public static function getAll () { \n")
+
+		attr = classes[classe]
+
+		f.write(TAB + TAB)
+		f.write("$con = Conexao::connect();\n\n")
+
+		# Cria o comando sql
+		f.write(TAB + TAB)
+		f.write("$sql = \"SELECT * FROM " + classe.lower() + "\";\n")
+
+		f.write(TAB + TAB)
+		f.write("$resultado = mysqli_query($con, $sql);\n")
+
+		f.write(TAB + TAB)
+		f.write("if(!$resultado) {echo mysqli_error ($con);} \n")
+		f.write(TAB + TAB)
+		f.write("else {\n")
+		f.write(TAB + TAB + TAB)
+		f.write("$array = array();\n")
+		f.write(TAB + TAB + TAB)
+		f.write("while ($i = mysqli_fetch_array($resultado)) {\n")
+		f.write(TAB + TAB + TAB + TAB)
+		f.write("array_push($array, new " + classe + "(")
+		for i,a in enumerate(attr):
+			if (a[0] == "&"):
+				a = a.replace("&", "")
+			f.write("$i[\'" + a + "\']")
+			if i < len(attr)-1:
+				f.write(", ")
+			else:
+				f.write("));\n")
+		f.write(TAB + TAB + TAB)
+		f.write("}\n")
+		f.write(TAB + TAB)
+		f.write("}\n\n")
+
+
+		f.write(TAB + TAB)
+		f.write("Conexao::close();\n")
+		f.write(TAB)
+		f.write("}\n\n") # Fim do getAll
+
+
+##########################################################################
 
 		f.write("}\n\n") # Fim da classe
 
