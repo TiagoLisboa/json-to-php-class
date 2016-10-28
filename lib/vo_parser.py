@@ -19,10 +19,19 @@ def gen_vo (classes, m):
 		# Escreve o construtor
 		f.write("\n" + TAB + "public function __construct(")
 		for i, atributo in enumerate(classes[classe]):
-			atributo = atributo.replace('&', "")
-			f.write ("$" + atributo)
-			if i < len(classes[classe])-1:
-				f.write(", ")
+			if i == 0 and atributo[0] == "&":
+				temp_attr = atributo
+				classes[classe].pop(i)
+				classes[classe].append(temp_attr)
+				f.write ("$" + classes[classe][i] + ", ")
+			else:
+				if atributo[0] == "&":
+					atributo = atributo.replace('&', "")
+					f.write ("$" + atributo + " = 0")
+				else:
+					f.write ("$" + atributo)
+				if i < len(classes[classe])-1:
+					f.write(", ")
 		f.write(") {\n")
 
 		# Escrever $this->attr = $attr

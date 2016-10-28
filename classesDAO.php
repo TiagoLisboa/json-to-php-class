@@ -1,0 +1,34 @@
+<?php
+require_once "Area.php";
+require_once "Conexao.php";
+require_once "Turma.php";
+require_once "Conexao.php";
+require_once "Grupo.php";
+require_once "Conexao.php";
+require_once "Mod.php";
+require_once "Conexao.php";
+require_once "Sem_com_cur.php";
+require_once "Conexao.php";
+require_once "Pro.php";
+require_once "Conexao.php";
+require_once "Disciplina.php";
+require_once "Conexao.php";
+require_once "Com_cur.php";
+require_once "Conexao.php";
+require_once "Nucleo.php";
+require_once "Conexao.php";
+require_once "Ofer.php";
+require_once "Conexao.php";
+require_once "Pro_grupo.php";
+require_once "Conexao.php";
+require_once "Curso.php";
+require_once "Conexao.php";
+require_once "Matriz.php";
+require_once "Conexao.php";
+require_once "Sem_plan.php";
+require_once "Conexao.php";
+require_once "Vaga.php";
+require_once "Conexao.php";
+require_once "Plan.php";
+require_once "Conexao.php";
+?>
