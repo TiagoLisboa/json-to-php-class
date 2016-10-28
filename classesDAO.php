@@ -1,13 +1,15 @@
 <?php
-require_once "Curso.php";
+require_once "Plan.php";
 require_once "Conexao.php";
-class CursoDAO {
-   public static function insert (Curso $curso) { 
+class PlanDAO {
+   public static function insert (Plan $plan) { 
       $con = Conexao::connect();
 
-      $nome = $curso->getNome();
-      $id_mod = $curso->getId_mod();
-      $sql = "INSERT INTO curso (nome, id_mod) VALUES ('$nome', '$id_mod')";
+      $nome = $plan->getNome();
+      $dat_cri = $plan->getDat_cri();
+      $dat_exe = $plan->getDat_exe();
+      $id_pro = $plan->getId_pro();
+      $sql = "INSERT INTO plan (nome, dat_cri, dat_exe, id_pro) VALUES ('$nome', '$dat_cri', '$dat_exe', '$id_pro')";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -15,13 +17,15 @@ class CursoDAO {
       Conexao::close();
    }
 
-   public static function update (Curso $curso) { 
+   public static function update (Plan $plan) { 
       $con = Conexao::connect();
 
-      $nome = $curso->getNome();
-      $id_mod = $curso->getId_mod();
-      $id_curso = $curso->getId_curso();
-      $sql = "UPDATE curso SET nome = '$nome', id_mod = '$id_mod' WHERE id_curso = '$id_curso'";
+      $nome = $plan->getNome();
+      $dat_cri = $plan->getDat_cri();
+      $dat_exe = $plan->getDat_exe();
+      $id_pro = $plan->getId_pro();
+      $id_plan = $plan->getId_plan();
+      $sql = "UPDATE plan SET nome = '$nome', dat_cri = '$dat_cri', dat_exe = '$dat_exe', id_pro = '$id_pro' WHERE id_plan = '$id_plan'";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -29,10 +33,10 @@ class CursoDAO {
       Conexao::close();
    }
 
-   public static function delete ($id_curso) { 
+   public static function delete ($id_plan) { 
       $con = Conexao::connect();
 
-      $sql = "DELETE FROM curso WHERE id_curso = '$id_curso'";
+      $sql = "DELETE FROM plan WHERE id_plan = '$id_plan'";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -43,13 +47,13 @@ class CursoDAO {
    public static function getAll () { 
       $con = Conexao::connect();
 
-      $sql = "SELECT * FROM curso";
+      $sql = "SELECT * FROM plan";
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
       else {
          $array = array();
          while ($i = mysqli_fetch_array($resultado)) {
-            array_push($array, new Curso($i['nome'], $i['id_mod'], $i['id_curso']));
+            array_push($array, new Plan($i['nome'], $i['dat_cri'], $i['dat_exe'], $i['id_pro'], $i['id_plan']));
          }
          return $array;
       }
@@ -57,290 +61,15 @@ class CursoDAO {
       Conexao::close();
    }
 
-   public static function getById ($id_curso) { 
+   public static function getById ($id_plan) { 
       $con = Conexao::connect();
 
-      $sql = "SELECT * FROM curso WHERE id_curso = $id_curso";
+      $sql = "SELECT * FROM plan WHERE id_plan = $id_plan";
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
       else {
          $i = mysqli_fetch_array($resultado)
-         $array = new Curso($i['nome'], $i['id_mod'], $i['id_curso']);
-         return $array;
-      }
-
-      Conexao::close();
-   }
-
-}
-
-require_once "Mod.php";
-require_once "Conexao.php";
-class ModDAO {
-   public static function insert (Mod $mod) { 
-      $con = Conexao::connect();
-
-      $nome = $mod->getNome();
-      $sql = "INSERT INTO mod (nome) VALUES ('$nome')";
-
-      $resultado = mysqli_query($con, $sql);
-      if(!$resultado) {echo mysqli_error ($con);} 
-
-      Conexao::close();
-   }
-
-   public static function update (Mod $mod) { 
-      $con = Conexao::connect();
-
-      $nome = $mod->getNome();
-      $id_mod = $mod->getId_mod();
-      $sql = "UPDATE mod SET nome = '$nome' WHERE id_mod = '$id_mod'";
-
-      $resultado = mysqli_query($con, $sql);
-      if(!$resultado) {echo mysqli_error ($con);} 
-
-      Conexao::close();
-   }
-
-   public static function delete ($id_mod) { 
-      $con = Conexao::connect();
-
-      $sql = "DELETE FROM mod WHERE id_mod = '$id_mod'";
-
-      $resultado = mysqli_query($con, $sql);
-      if(!$resultado) {echo mysqli_error ($con);} 
-
-      Conexao::close();
-   }
-
-   public static function getAll () { 
-      $con = Conexao::connect();
-
-      $sql = "SELECT * FROM mod";
-      $resultado = mysqli_query($con, $sql);
-      if(!$resultado) {echo mysqli_error ($con);} 
-      else {
-         $array = array();
-         while ($i = mysqli_fetch_array($resultado)) {
-            array_push($array, new Mod($i['nome'], $i['id_mod']));
-         }
-         return $array;
-      }
-
-      Conexao::close();
-   }
-
-   public static function getById ($id_mod) { 
-      $con = Conexao::connect();
-
-      $sql = "SELECT * FROM mod WHERE id_mod = $id_mod";
-      $resultado = mysqli_query($con, $sql);
-      if(!$resultado) {echo mysqli_error ($con);} 
-      else {
-         $i = mysqli_fetch_array($resultado)
-         $array = new Mod($i['nome'], $i['id_mod']);
-         return $array;
-      }
-
-      Conexao::close();
-   }
-
-}
-
-require_once "Pro_grupo.php";
-require_once "Conexao.php";
-class Pro_grupoDAO {
-   public static function insert (Pro_grupo $pro_grupo) { 
-      $con = Conexao::connect();
-
-      $id_pro = $pro_grupo->getId_pro();
-      $id_grupo = $pro_grupo->getId_grupo();
-      $sql = "INSERT INTO pro_grupo (id_pro, id_grupo) VALUES ('$id_pro', '$id_grupo')";
-
-      $resultado = mysqli_query($con, $sql);
-      if(!$resultado) {echo mysqli_error ($con);} 
-
-      Conexao::close();
-   }
-
-   public static function update (Pro_grupo $pro_grupo) { 
-      $con = Conexao::connect();
-
-      $id_pro = $pro_grupo->getId_pro();
-      $id_grupo = $pro_grupo->getId_grupo();
-      $sql = "UPDATE pro_grupo SET id_pro = '$id_pro', id_grupo = '$id_grupo'";
-
-      $resultado = mysqli_query($con, $sql);
-      if(!$resultado) {echo mysqli_error ($con);} 
-
-      Conexao::close();
-   }
-
-      public static function getAll () { 
-      $con = Conexao::connect();
-
-      $sql = "SELECT * FROM pro_grupo";
-      $resultado = mysqli_query($con, $sql);
-      if(!$resultado) {echo mysqli_error ($con);} 
-      else {
-         $array = array();
-         while ($i = mysqli_fetch_array($resultado)) {
-            array_push($array, new Pro_grupo($i['id_pro'], $i['id_grupo']));
-         }
-         return $array;
-      }
-
-      Conexao::close();
-   }
-
-   }
-
-require_once "Com_cur.php";
-require_once "Conexao.php";
-class Com_curDAO {
-   public static function insert (Com_cur $com_cur) { 
-      $con = Conexao::connect();
-
-      $nome = $com_cur->getNome();
-      $car_hor = $com_cur->getCar_hor();
-      $id_matriz = $com_cur->getId_matriz();
-      $id_nucleo = $com_cur->getId_nucleo();
-      $id_dis = $com_cur->getId_dis();
-      $sql = "INSERT INTO com_cur (nome, car_hor, id_matriz, id_nucleo, id_dis) VALUES ('$nome', '$car_hor', '$id_matriz', '$id_nucleo', '$id_dis')";
-
-      $resultado = mysqli_query($con, $sql);
-      if(!$resultado) {echo mysqli_error ($con);} 
-
-      Conexao::close();
-   }
-
-   public static function update (Com_cur $com_cur) { 
-      $con = Conexao::connect();
-
-      $nome = $com_cur->getNome();
-      $car_hor = $com_cur->getCar_hor();
-      $id_matriz = $com_cur->getId_matriz();
-      $id_nucleo = $com_cur->getId_nucleo();
-      $id_dis = $com_cur->getId_dis();
-      $id_com_cur = $com_cur->getId_com_cur();
-      $sql = "UPDATE com_cur SET nome = '$nome', car_hor = '$car_hor', id_matriz = '$id_matriz', id_nucleo = '$id_nucleo', id_dis = '$id_dis' WHERE id_com_cur = '$id_com_cur'";
-
-      $resultado = mysqli_query($con, $sql);
-      if(!$resultado) {echo mysqli_error ($con);} 
-
-      Conexao::close();
-   }
-
-   public static function delete ($id_com_cur) { 
-      $con = Conexao::connect();
-
-      $sql = "DELETE FROM com_cur WHERE id_com_cur = '$id_com_cur'";
-
-      $resultado = mysqli_query($con, $sql);
-      if(!$resultado) {echo mysqli_error ($con);} 
-
-      Conexao::close();
-   }
-
-   public static function getAll () { 
-      $con = Conexao::connect();
-
-      $sql = "SELECT * FROM com_cur";
-      $resultado = mysqli_query($con, $sql);
-      if(!$resultado) {echo mysqli_error ($con);} 
-      else {
-         $array = array();
-         while ($i = mysqli_fetch_array($resultado)) {
-            array_push($array, new Com_cur($i['nome'], $i['car_hor'], $i['id_matriz'], $i['id_nucleo'], $i['id_dis'], $i['id_com_cur']));
-         }
-         return $array;
-      }
-
-      Conexao::close();
-   }
-
-   public static function getById ($id_com_cur) { 
-      $con = Conexao::connect();
-
-      $sql = "SELECT * FROM com_cur WHERE id_com_cur = $id_com_cur";
-      $resultado = mysqli_query($con, $sql);
-      if(!$resultado) {echo mysqli_error ($con);} 
-      else {
-         $i = mysqli_fetch_array($resultado)
-         $array = new Com_cur($i['nome'], $i['car_hor'], $i['id_matriz'], $i['id_nucleo'], $i['id_dis'], $i['id_com_cur']);
-         return $array;
-      }
-
-      Conexao::close();
-   }
-
-}
-
-require_once "Nucleo.php";
-require_once "Conexao.php";
-class NucleoDAO {
-   public static function insert (Nucleo $nucleo) { 
-      $con = Conexao::connect();
-
-      $nome = $nucleo->getNome();
-      $sql = "INSERT INTO nucleo (nome) VALUES ('$nome')";
-
-      $resultado = mysqli_query($con, $sql);
-      if(!$resultado) {echo mysqli_error ($con);} 
-
-      Conexao::close();
-   }
-
-   public static function update (Nucleo $nucleo) { 
-      $con = Conexao::connect();
-
-      $nome = $nucleo->getNome();
-      $id_nucleo = $nucleo->getId_nucleo();
-      $sql = "UPDATE nucleo SET nome = '$nome' WHERE id_nucleo = '$id_nucleo'";
-
-      $resultado = mysqli_query($con, $sql);
-      if(!$resultado) {echo mysqli_error ($con);} 
-
-      Conexao::close();
-   }
-
-   public static function delete ($id_nucleo) { 
-      $con = Conexao::connect();
-
-      $sql = "DELETE FROM nucleo WHERE id_nucleo = '$id_nucleo'";
-
-      $resultado = mysqli_query($con, $sql);
-      if(!$resultado) {echo mysqli_error ($con);} 
-
-      Conexao::close();
-   }
-
-   public static function getAll () { 
-      $con = Conexao::connect();
-
-      $sql = "SELECT * FROM nucleo";
-      $resultado = mysqli_query($con, $sql);
-      if(!$resultado) {echo mysqli_error ($con);} 
-      else {
-         $array = array();
-         while ($i = mysqli_fetch_array($resultado)) {
-            array_push($array, new Nucleo($i['nome'], $i['id_nucleo']));
-         }
-         return $array;
-      }
-
-      Conexao::close();
-   }
-
-   public static function getById ($id_nucleo) { 
-      $con = Conexao::connect();
-
-      $sql = "SELECT * FROM nucleo WHERE id_nucleo = $id_nucleo";
-      $resultado = mysqli_query($con, $sql);
-      if(!$resultado) {echo mysqli_error ($con);} 
-      else {
-         $i = mysqli_fetch_array($resultado)
-         $array = new Nucleo($i['nome'], $i['id_nucleo']);
+         $array = new Plan($i['nome'], $i['dat_cri'], $i['dat_exe'], $i['id_pro'], $i['id_plan']);
          return $array;
       }
 
@@ -424,15 +153,14 @@ class GrupoDAO {
 
 }
 
-require_once "Sem_plan.php";
+require_once "Nucleo.php";
 require_once "Conexao.php";
-class Sem_planDAO {
-   public static function insert (Sem_plan $sem_plan) { 
+class NucleoDAO {
+   public static function insert (Nucleo $nucleo) { 
       $con = Conexao::connect();
 
-      $semestre = $sem_plan->getSemestre();
-      $id_plan = $sem_plan->getId_plan();
-      $sql = "INSERT INTO sem_plan (semestre, id_plan) VALUES ('$semestre', '$id_plan')";
+      $nome = $nucleo->getNome();
+      $sql = "INSERT INTO nucleo (nome) VALUES ('$nome')";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -440,13 +168,12 @@ class Sem_planDAO {
       Conexao::close();
    }
 
-   public static function update (Sem_plan $sem_plan) { 
+   public static function update (Nucleo $nucleo) { 
       $con = Conexao::connect();
 
-      $semestre = $sem_plan->getSemestre();
-      $id_plan = $sem_plan->getId_plan();
-      $id_sem_plan = $sem_plan->getId_sem_plan();
-      $sql = "UPDATE sem_plan SET semestre = '$semestre', id_plan = '$id_plan' WHERE id_sem_plan = '$id_sem_plan'";
+      $nome = $nucleo->getNome();
+      $id_nucleo = $nucleo->getId_nucleo();
+      $sql = "UPDATE nucleo SET nome = '$nome' WHERE id_nucleo = '$id_nucleo'";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -454,10 +181,10 @@ class Sem_planDAO {
       Conexao::close();
    }
 
-   public static function delete ($id_sem_plan) { 
+   public static function delete ($id_nucleo) { 
       $con = Conexao::connect();
 
-      $sql = "DELETE FROM sem_plan WHERE id_sem_plan = '$id_sem_plan'";
+      $sql = "DELETE FROM nucleo WHERE id_nucleo = '$id_nucleo'";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -468,13 +195,13 @@ class Sem_planDAO {
    public static function getAll () { 
       $con = Conexao::connect();
 
-      $sql = "SELECT * FROM sem_plan";
+      $sql = "SELECT * FROM nucleo";
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
       else {
          $array = array();
          while ($i = mysqli_fetch_array($resultado)) {
-            array_push($array, new Sem_plan($i['semestre'], $i['id_plan'], $i['id_sem_plan']));
+            array_push($array, new Nucleo($i['nome'], $i['id_nucleo']));
          }
          return $array;
       }
@@ -482,15 +209,15 @@ class Sem_planDAO {
       Conexao::close();
    }
 
-   public static function getById ($id_sem_plan) { 
+   public static function getById ($id_nucleo) { 
       $con = Conexao::connect();
 
-      $sql = "SELECT * FROM sem_plan WHERE id_sem_plan = $id_sem_plan";
+      $sql = "SELECT * FROM nucleo WHERE id_nucleo = $id_nucleo";
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
       else {
          $i = mysqli_fetch_array($resultado)
-         $array = new Sem_plan($i['semestre'], $i['id_plan'], $i['id_sem_plan']);
+         $array = new Nucleo($i['nome'], $i['id_nucleo']);
          return $array;
       }
 
@@ -499,19 +226,14 @@ class Sem_planDAO {
 
 }
 
-require_once "Ofer.php";
+require_once "Mod.php";
 require_once "Conexao.php";
-class OferDAO {
-   public static function insert (Ofer $ofer) { 
+class ModDAO {
+   public static function insert (Mod $mod) { 
       $con = Conexao::connect();
 
-      $id_plan = $ofer->getId_plan();
-      $id_matriz = $ofer->getId_matriz();
-      $qtd_sem = $ofer->getQtd_sem();
-      $sem_ini = $ofer->getSem_ini();
-      $turno = $ofer->getTurno();
-      $numero = $ofer->getNumero();
-      $sql = "INSERT INTO ofer (id_plan, id_matriz, qtd_sem, sem_ini, turno, numero) VALUES ('$id_plan', '$id_matriz', '$qtd_sem', '$sem_ini', '$turno', '$numero')";
+      $nome = $mod->getNome();
+      $sql = "INSERT INTO mod (nome) VALUES ('$nome')";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -519,16 +241,12 @@ class OferDAO {
       Conexao::close();
    }
 
-   public static function update (Ofer $ofer) { 
+   public static function update (Mod $mod) { 
       $con = Conexao::connect();
 
-      $id_plan = $ofer->getId_plan();
-      $id_matriz = $ofer->getId_matriz();
-      $qtd_sem = $ofer->getQtd_sem();
-      $sem_ini = $ofer->getSem_ini();
-      $turno = $ofer->getTurno();
-      $numero = $ofer->getNumero();
-      $sql = "UPDATE ofer SET id_plan = '$id_plan', id_matriz = '$id_matriz', qtd_sem = '$qtd_sem', sem_ini = '$sem_ini', turno = '$turno', numero = '$numero'";
+      $nome = $mod->getNome();
+      $id_mod = $mod->getId_mod();
+      $sql = "UPDATE mod SET nome = '$nome' WHERE id_mod = '$id_mod'";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -536,16 +254,27 @@ class OferDAO {
       Conexao::close();
    }
 
-      public static function getAll () { 
+   public static function delete ($id_mod) { 
       $con = Conexao::connect();
 
-      $sql = "SELECT * FROM ofer";
+      $sql = "DELETE FROM mod WHERE id_mod = '$id_mod'";
+
+      $resultado = mysqli_query($con, $sql);
+      if(!$resultado) {echo mysqli_error ($con);} 
+
+      Conexao::close();
+   }
+
+   public static function getAll () { 
+      $con = Conexao::connect();
+
+      $sql = "SELECT * FROM mod";
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
       else {
          $array = array();
          while ($i = mysqli_fetch_array($resultado)) {
-            array_push($array, new Ofer($i['id_plan'], $i['id_matriz'], $i['qtd_sem'], $i['sem_ini'], $i['turno'], $i['numero']));
+            array_push($array, new Mod($i['nome'], $i['id_mod']));
          }
          return $array;
       }
@@ -553,7 +282,103 @@ class OferDAO {
       Conexao::close();
    }
 
+   public static function getById ($id_mod) { 
+      $con = Conexao::connect();
+
+      $sql = "SELECT * FROM mod WHERE id_mod = $id_mod";
+      $resultado = mysqli_query($con, $sql);
+      if(!$resultado) {echo mysqli_error ($con);} 
+      else {
+         $i = mysqli_fetch_array($resultado)
+         $array = new Mod($i['nome'], $i['id_mod']);
+         return $array;
+      }
+
+      Conexao::close();
    }
+
+}
+
+require_once "Com_cur.php";
+require_once "Conexao.php";
+class Com_curDAO {
+   public static function insert (Com_cur $com_cur) { 
+      $con = Conexao::connect();
+
+      $nome = $com_cur->getNome();
+      $car_hor = $com_cur->getCar_hor();
+      $id_matriz = $com_cur->getId_matriz();
+      $id_nucleo = $com_cur->getId_nucleo();
+      $id_dis = $com_cur->getId_dis();
+      $sql = "INSERT INTO com_cur (nome, car_hor, id_matriz, id_nucleo, id_dis) VALUES ('$nome', '$car_hor', '$id_matriz', '$id_nucleo', '$id_dis')";
+
+      $resultado = mysqli_query($con, $sql);
+      if(!$resultado) {echo mysqli_error ($con);} 
+
+      Conexao::close();
+   }
+
+   public static function update (Com_cur $com_cur) { 
+      $con = Conexao::connect();
+
+      $nome = $com_cur->getNome();
+      $car_hor = $com_cur->getCar_hor();
+      $id_matriz = $com_cur->getId_matriz();
+      $id_nucleo = $com_cur->getId_nucleo();
+      $id_dis = $com_cur->getId_dis();
+      $id_com_cur = $com_cur->getId_com_cur();
+      $sql = "UPDATE com_cur SET nome = '$nome', car_hor = '$car_hor', id_matriz = '$id_matriz', id_nucleo = '$id_nucleo', id_dis = '$id_dis' WHERE id_com_cur = '$id_com_cur'";
+
+      $resultado = mysqli_query($con, $sql);
+      if(!$resultado) {echo mysqli_error ($con);} 
+
+      Conexao::close();
+   }
+
+   public static function delete ($id_com_cur) { 
+      $con = Conexao::connect();
+
+      $sql = "DELETE FROM com_cur WHERE id_com_cur = '$id_com_cur'";
+
+      $resultado = mysqli_query($con, $sql);
+      if(!$resultado) {echo mysqli_error ($con);} 
+
+      Conexao::close();
+   }
+
+   public static function getAll () { 
+      $con = Conexao::connect();
+
+      $sql = "SELECT * FROM com_cur";
+      $resultado = mysqli_query($con, $sql);
+      if(!$resultado) {echo mysqli_error ($con);} 
+      else {
+         $array = array();
+         while ($i = mysqli_fetch_array($resultado)) {
+            array_push($array, new Com_cur($i['nome'], $i['car_hor'], $i['id_matriz'], $i['id_nucleo'], $i['id_dis'], $i['id_com_cur']));
+         }
+         return $array;
+      }
+
+      Conexao::close();
+   }
+
+   public static function getById ($id_com_cur) { 
+      $con = Conexao::connect();
+
+      $sql = "SELECT * FROM com_cur WHERE id_com_cur = $id_com_cur";
+      $resultado = mysqli_query($con, $sql);
+      if(!$resultado) {echo mysqli_error ($con);} 
+      else {
+         $i = mysqli_fetch_array($resultado)
+         $array = new Com_cur($i['nome'], $i['car_hor'], $i['id_matriz'], $i['id_nucleo'], $i['id_dis'], $i['id_com_cur']);
+         return $array;
+      }
+
+      Conexao::close();
+   }
+
+}
 
 require_once "Sem_com_cur.php";
 require_once "Conexao.php";
@@ -632,16 +457,18 @@ class Sem_com_curDAO {
 
 }
 
-require_once "Matriz.php";
+require_once "Pro.php";
 require_once "Conexao.php";
-class MatrizDAO {
-   public static function insert (Matriz $matriz) { 
+class ProDAO {
+   public static function insert (Pro $pro) { 
       $con = Conexao::connect();
 
-      $nome = $matriz->getNome();
-      $ano = $matriz->getAno();
-      $id_curso = $matriz->getId_curso();
-      $sql = "INSERT INTO matriz (nome, ano, id_curso) VALUES ('$nome', '$ano', '$id_curso')";
+      $nome = $pro->getNome();
+      $matricula = $pro->getMatricula();
+      $car_hor = $pro->getCar_hor();
+      $dir_aca = $pro->getDir_aca();
+      $senha = $pro->getSenha();
+      $sql = "INSERT INTO pro (nome, matricula, car_hor, dir_aca, senha) VALUES ('$nome', '$matricula', '$car_hor', '$dir_aca', '$senha')";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -649,14 +476,16 @@ class MatrizDAO {
       Conexao::close();
    }
 
-   public static function update (Matriz $matriz) { 
+   public static function update (Pro $pro) { 
       $con = Conexao::connect();
 
-      $nome = $matriz->getNome();
-      $ano = $matriz->getAno();
-      $id_curso = $matriz->getId_curso();
-      $id_matriz = $matriz->getId_matriz();
-      $sql = "UPDATE matriz SET nome = '$nome', ano = '$ano', id_curso = '$id_curso' WHERE id_matriz = '$id_matriz'";
+      $nome = $pro->getNome();
+      $matricula = $pro->getMatricula();
+      $car_hor = $pro->getCar_hor();
+      $dir_aca = $pro->getDir_aca();
+      $senha = $pro->getSenha();
+      $id_pro = $pro->getId_pro();
+      $sql = "UPDATE pro SET nome = '$nome', matricula = '$matricula', car_hor = '$car_hor', dir_aca = '$dir_aca', senha = '$senha' WHERE id_pro = '$id_pro'";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -664,10 +493,10 @@ class MatrizDAO {
       Conexao::close();
    }
 
-   public static function delete ($id_matriz) { 
+   public static function delete ($id_pro) { 
       $con = Conexao::connect();
 
-      $sql = "DELETE FROM matriz WHERE id_matriz = '$id_matriz'";
+      $sql = "DELETE FROM pro WHERE id_pro = '$id_pro'";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -678,13 +507,13 @@ class MatrizDAO {
    public static function getAll () { 
       $con = Conexao::connect();
 
-      $sql = "SELECT * FROM matriz";
+      $sql = "SELECT * FROM pro";
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
       else {
          $array = array();
          while ($i = mysqli_fetch_array($resultado)) {
-            array_push($array, new Matriz($i['nome'], $i['ano'], $i['id_curso'], $i['id_matriz']));
+            array_push($array, new Pro($i['nome'], $i['matricula'], $i['car_hor'], $i['dir_aca'], $i['senha'], $i['id_pro']));
          }
          return $array;
       }
@@ -692,15 +521,15 @@ class MatrizDAO {
       Conexao::close();
    }
 
-   public static function getById ($id_matriz) { 
+   public static function getById ($id_pro) { 
       $con = Conexao::connect();
 
-      $sql = "SELECT * FROM matriz WHERE id_matriz = $id_matriz";
+      $sql = "SELECT * FROM pro WHERE id_pro = $id_pro";
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
       else {
          $i = mysqli_fetch_array($resultado)
-         $array = new Matriz($i['nome'], $i['ano'], $i['id_curso'], $i['id_matriz']);
+         $array = new Pro($i['nome'], $i['matricula'], $i['car_hor'], $i['dir_aca'], $i['senha'], $i['id_pro']);
          return $array;
       }
 
@@ -786,19 +615,15 @@ class DisciplinaDAO {
 
 }
 
-require_once "Turma.php";
+require_once "Sem_plan.php";
 require_once "Conexao.php";
-class TurmaDAO {
-   public static function insert (Turma $turma) { 
+class Sem_planDAO {
+   public static function insert (Sem_plan $sem_plan) { 
       $con = Conexao::connect();
 
-      $nome = $turma->getNome();
-      $turno = $turma->getTurno();
-      $qtd_alunos = $turma->getQtd_alunos();
-      $per_atual = $turma->getPer_atual();
-      $id_matriz = $turma->getId_matriz();
-      $id_sem_plan = $turma->getId_sem_plan();
-      $sql = "INSERT INTO turma (nome, turno, qtd_alunos, per_atual, id_matriz, id_sem_plan) VALUES ('$nome', '$turno', '$qtd_alunos', '$per_atual', '$id_matriz', '$id_sem_plan')";
+      $semestre = $sem_plan->getSemestre();
+      $id_plan = $sem_plan->getId_plan();
+      $sql = "INSERT INTO sem_plan (semestre, id_plan) VALUES ('$semestre', '$id_plan')";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -806,17 +631,13 @@ class TurmaDAO {
       Conexao::close();
    }
 
-   public static function update (Turma $turma) { 
+   public static function update (Sem_plan $sem_plan) { 
       $con = Conexao::connect();
 
-      $nome = $turma->getNome();
-      $turno = $turma->getTurno();
-      $qtd_alunos = $turma->getQtd_alunos();
-      $per_atual = $turma->getPer_atual();
-      $id_matriz = $turma->getId_matriz();
-      $id_sem_plan = $turma->getId_sem_plan();
-      $id_turma = $turma->getId_turma();
-      $sql = "UPDATE turma SET nome = '$nome', turno = '$turno', qtd_alunos = '$qtd_alunos', per_atual = '$per_atual', id_matriz = '$id_matriz', id_sem_plan = '$id_sem_plan' WHERE id_turma = '$id_turma'";
+      $semestre = $sem_plan->getSemestre();
+      $id_plan = $sem_plan->getId_plan();
+      $id_sem_plan = $sem_plan->getId_sem_plan();
+      $sql = "UPDATE sem_plan SET semestre = '$semestre', id_plan = '$id_plan' WHERE id_sem_plan = '$id_sem_plan'";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -824,10 +645,10 @@ class TurmaDAO {
       Conexao::close();
    }
 
-   public static function delete ($id_turma) { 
+   public static function delete ($id_sem_plan) { 
       $con = Conexao::connect();
 
-      $sql = "DELETE FROM turma WHERE id_turma = '$id_turma'";
+      $sql = "DELETE FROM sem_plan WHERE id_sem_plan = '$id_sem_plan'";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -838,13 +659,13 @@ class TurmaDAO {
    public static function getAll () { 
       $con = Conexao::connect();
 
-      $sql = "SELECT * FROM turma";
+      $sql = "SELECT * FROM sem_plan";
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
       else {
          $array = array();
          while ($i = mysqli_fetch_array($resultado)) {
-            array_push($array, new Turma($i['nome'], $i['turno'], $i['qtd_alunos'], $i['per_atual'], $i['id_matriz'], $i['id_sem_plan'], $i['id_turma']));
+            array_push($array, new Sem_plan($i['semestre'], $i['id_plan'], $i['id_sem_plan']));
          }
          return $array;
       }
@@ -852,15 +673,15 @@ class TurmaDAO {
       Conexao::close();
    }
 
-   public static function getById ($id_turma) { 
+   public static function getById ($id_sem_plan) { 
       $con = Conexao::connect();
 
-      $sql = "SELECT * FROM turma WHERE id_turma = $id_turma";
+      $sql = "SELECT * FROM sem_plan WHERE id_sem_plan = $id_sem_plan";
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
       else {
          $i = mysqli_fetch_array($resultado)
-         $array = new Turma($i['nome'], $i['turno'], $i['qtd_alunos'], $i['per_atual'], $i['id_matriz'], $i['id_sem_plan'], $i['id_turma']);
+         $array = new Sem_plan($i['semestre'], $i['id_plan'], $i['id_sem_plan']);
          return $array;
       }
 
@@ -869,17 +690,15 @@ class TurmaDAO {
 
 }
 
-require_once "Plan.php";
+require_once "Curso.php";
 require_once "Conexao.php";
-class PlanDAO {
-   public static function insert (Plan $plan) { 
+class CursoDAO {
+   public static function insert (Curso $curso) { 
       $con = Conexao::connect();
 
-      $nome = $plan->getNome();
-      $dat_cri = $plan->getDat_cri();
-      $dat_exe = $plan->getDat_exe();
-      $id_pro = $plan->getId_pro();
-      $sql = "INSERT INTO plan (nome, dat_cri, dat_exe, id_pro) VALUES ('$nome', '$dat_cri', '$dat_exe', '$id_pro')";
+      $nome = $curso->getNome();
+      $id_mod = $curso->getId_mod();
+      $sql = "INSERT INTO curso (nome, id_mod) VALUES ('$nome', '$id_mod')";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -887,15 +706,13 @@ class PlanDAO {
       Conexao::close();
    }
 
-   public static function update (Plan $plan) { 
+   public static function update (Curso $curso) { 
       $con = Conexao::connect();
 
-      $nome = $plan->getNome();
-      $dat_cri = $plan->getDat_cri();
-      $dat_exe = $plan->getDat_exe();
-      $id_pro = $plan->getId_pro();
-      $id_plan = $plan->getId_plan();
-      $sql = "UPDATE plan SET nome = '$nome', dat_cri = '$dat_cri', dat_exe = '$dat_exe', id_pro = '$id_pro' WHERE id_plan = '$id_plan'";
+      $nome = $curso->getNome();
+      $id_mod = $curso->getId_mod();
+      $id_curso = $curso->getId_curso();
+      $sql = "UPDATE curso SET nome = '$nome', id_mod = '$id_mod' WHERE id_curso = '$id_curso'";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -903,10 +720,10 @@ class PlanDAO {
       Conexao::close();
    }
 
-   public static function delete ($id_plan) { 
+   public static function delete ($id_curso) { 
       $con = Conexao::connect();
 
-      $sql = "DELETE FROM plan WHERE id_plan = '$id_plan'";
+      $sql = "DELETE FROM curso WHERE id_curso = '$id_curso'";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -917,13 +734,13 @@ class PlanDAO {
    public static function getAll () { 
       $con = Conexao::connect();
 
-      $sql = "SELECT * FROM plan";
+      $sql = "SELECT * FROM curso";
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
       else {
          $array = array();
          while ($i = mysqli_fetch_array($resultado)) {
-            array_push($array, new Plan($i['nome'], $i['dat_cri'], $i['dat_exe'], $i['id_pro'], $i['id_plan']));
+            array_push($array, new Curso($i['nome'], $i['id_mod'], $i['id_curso']));
          }
          return $array;
       }
@@ -931,15 +748,15 @@ class PlanDAO {
       Conexao::close();
    }
 
-   public static function getById ($id_plan) { 
+   public static function getById ($id_curso) { 
       $con = Conexao::connect();
 
-      $sql = "SELECT * FROM plan WHERE id_plan = $id_plan";
+      $sql = "SELECT * FROM curso WHERE id_curso = $id_curso";
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
       else {
          $i = mysqli_fetch_array($resultado)
-         $array = new Plan($i['nome'], $i['dat_cri'], $i['dat_exe'], $i['id_pro'], $i['id_plan']);
+         $array = new Curso($i['nome'], $i['id_mod'], $i['id_curso']);
          return $array;
       }
 
@@ -1106,18 +923,19 @@ class VagaDAO {
 
 }
 
-require_once "Pro.php";
+require_once "Turma.php";
 require_once "Conexao.php";
-class ProDAO {
-   public static function insert (Pro $pro) { 
+class TurmaDAO {
+   public static function insert (Turma $turma) { 
       $con = Conexao::connect();
 
-      $nome = $pro->getNome();
-      $matricula = $pro->getMatricula();
-      $car_hor = $pro->getCar_hor();
-      $dir_aca = $pro->getDir_aca();
-      $senha = $pro->getSenha();
-      $sql = "INSERT INTO pro (nome, matricula, car_hor, dir_aca, senha) VALUES ('$nome', '$matricula', '$car_hor', '$dir_aca', '$senha')";
+      $nome = $turma->getNome();
+      $turno = $turma->getTurno();
+      $qtd_alunos = $turma->getQtd_alunos();
+      $per_atual = $turma->getPer_atual();
+      $id_matriz = $turma->getId_matriz();
+      $id_sem_plan = $turma->getId_sem_plan();
+      $sql = "INSERT INTO turma (nome, turno, qtd_alunos, per_atual, id_matriz, id_sem_plan) VALUES ('$nome', '$turno', '$qtd_alunos', '$per_atual', '$id_matriz', '$id_sem_plan')";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -1125,16 +943,17 @@ class ProDAO {
       Conexao::close();
    }
 
-   public static function update (Pro $pro) { 
+   public static function update (Turma $turma) { 
       $con = Conexao::connect();
 
-      $nome = $pro->getNome();
-      $matricula = $pro->getMatricula();
-      $car_hor = $pro->getCar_hor();
-      $dir_aca = $pro->getDir_aca();
-      $senha = $pro->getSenha();
-      $id_pro = $pro->getId_pro();
-      $sql = "UPDATE pro SET nome = '$nome', matricula = '$matricula', car_hor = '$car_hor', dir_aca = '$dir_aca', senha = '$senha' WHERE id_pro = '$id_pro'";
+      $nome = $turma->getNome();
+      $turno = $turma->getTurno();
+      $qtd_alunos = $turma->getQtd_alunos();
+      $per_atual = $turma->getPer_atual();
+      $id_matriz = $turma->getId_matriz();
+      $id_sem_plan = $turma->getId_sem_plan();
+      $id_turma = $turma->getId_turma();
+      $sql = "UPDATE turma SET nome = '$nome', turno = '$turno', qtd_alunos = '$qtd_alunos', per_atual = '$per_atual', id_matriz = '$id_matriz', id_sem_plan = '$id_sem_plan' WHERE id_turma = '$id_turma'";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -1142,10 +961,10 @@ class ProDAO {
       Conexao::close();
    }
 
-   public static function delete ($id_pro) { 
+   public static function delete ($id_turma) { 
       $con = Conexao::connect();
 
-      $sql = "DELETE FROM pro WHERE id_pro = '$id_pro'";
+      $sql = "DELETE FROM turma WHERE id_turma = '$id_turma'";
 
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
@@ -1156,13 +975,13 @@ class ProDAO {
    public static function getAll () { 
       $con = Conexao::connect();
 
-      $sql = "SELECT * FROM pro";
+      $sql = "SELECT * FROM turma";
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
       else {
          $array = array();
          while ($i = mysqli_fetch_array($resultado)) {
-            array_push($array, new Pro($i['nome'], $i['matricula'], $i['car_hor'], $i['dir_aca'], $i['senha'], $i['id_pro']));
+            array_push($array, new Turma($i['nome'], $i['turno'], $i['qtd_alunos'], $i['per_atual'], $i['id_matriz'], $i['id_sem_plan'], $i['id_turma']));
          }
          return $array;
       }
@@ -1170,15 +989,196 @@ class ProDAO {
       Conexao::close();
    }
 
-   public static function getById ($id_pro) { 
+   public static function getById ($id_turma) { 
       $con = Conexao::connect();
 
-      $sql = "SELECT * FROM pro WHERE id_pro = $id_pro";
+      $sql = "SELECT * FROM turma WHERE id_turma = $id_turma";
       $resultado = mysqli_query($con, $sql);
       if(!$resultado) {echo mysqli_error ($con);} 
       else {
          $i = mysqli_fetch_array($resultado)
-         $array = new Pro($i['nome'], $i['matricula'], $i['car_hor'], $i['dir_aca'], $i['senha'], $i['id_pro']);
+         $array = new Turma($i['nome'], $i['turno'], $i['qtd_alunos'], $i['per_atual'], $i['id_matriz'], $i['id_sem_plan'], $i['id_turma']);
+         return $array;
+      }
+
+      Conexao::close();
+   }
+
+}
+
+require_once "Ofer.php";
+require_once "Conexao.php";
+class OferDAO {
+   public static function insert (Ofer $ofer) { 
+      $con = Conexao::connect();
+
+      $id_plan = $ofer->getId_plan();
+      $id_matriz = $ofer->getId_matriz();
+      $qtd_sem = $ofer->getQtd_sem();
+      $sem_ini = $ofer->getSem_ini();
+      $turno = $ofer->getTurno();
+      $numero = $ofer->getNumero();
+      $sql = "INSERT INTO ofer (id_plan, id_matriz, qtd_sem, sem_ini, turno, numero) VALUES ('$id_plan', '$id_matriz', '$qtd_sem', '$sem_ini', '$turno', '$numero')";
+
+      $resultado = mysqli_query($con, $sql);
+      if(!$resultado) {echo mysqli_error ($con);} 
+
+      Conexao::close();
+   }
+
+   public static function update (Ofer $ofer) { 
+      $con = Conexao::connect();
+
+      $id_plan = $ofer->getId_plan();
+      $id_matriz = $ofer->getId_matriz();
+      $qtd_sem = $ofer->getQtd_sem();
+      $sem_ini = $ofer->getSem_ini();
+      $turno = $ofer->getTurno();
+      $numero = $ofer->getNumero();
+      $sql = "UPDATE ofer SET id_plan = '$id_plan', id_matriz = '$id_matriz', qtd_sem = '$qtd_sem', sem_ini = '$sem_ini', turno = '$turno', numero = '$numero'";
+
+      $resultado = mysqli_query($con, $sql);
+      if(!$resultado) {echo mysqli_error ($con);} 
+
+      Conexao::close();
+   }
+
+      public static function getAll () { 
+      $con = Conexao::connect();
+
+      $sql = "SELECT * FROM ofer";
+      $resultado = mysqli_query($con, $sql);
+      if(!$resultado) {echo mysqli_error ($con);} 
+      else {
+         $array = array();
+         while ($i = mysqli_fetch_array($resultado)) {
+            array_push($array, new Ofer($i['id_plan'], $i['id_matriz'], $i['qtd_sem'], $i['sem_ini'], $i['turno'], $i['numero']));
+         }
+         return $array;
+      }
+
+      Conexao::close();
+   }
+
+   }
+
+require_once "Pro_grupo.php";
+require_once "Conexao.php";
+class Pro_grupoDAO {
+   public static function insert (Pro_grupo $pro_grupo) { 
+      $con = Conexao::connect();
+
+      $id_pro = $pro_grupo->getId_pro();
+      $id_grupo = $pro_grupo->getId_grupo();
+      $sql = "INSERT INTO pro_grupo (id_pro, id_grupo) VALUES ('$id_pro', '$id_grupo')";
+
+      $resultado = mysqli_query($con, $sql);
+      if(!$resultado) {echo mysqli_error ($con);} 
+
+      Conexao::close();
+   }
+
+   public static function update (Pro_grupo $pro_grupo) { 
+      $con = Conexao::connect();
+
+      $id_pro = $pro_grupo->getId_pro();
+      $id_grupo = $pro_grupo->getId_grupo();
+      $sql = "UPDATE pro_grupo SET id_pro = '$id_pro', id_grupo = '$id_grupo'";
+
+      $resultado = mysqli_query($con, $sql);
+      if(!$resultado) {echo mysqli_error ($con);} 
+
+      Conexao::close();
+   }
+
+      public static function getAll () { 
+      $con = Conexao::connect();
+
+      $sql = "SELECT * FROM pro_grupo";
+      $resultado = mysqli_query($con, $sql);
+      if(!$resultado) {echo mysqli_error ($con);} 
+      else {
+         $array = array();
+         while ($i = mysqli_fetch_array($resultado)) {
+            array_push($array, new Pro_grupo($i['id_pro'], $i['id_grupo']));
+         }
+         return $array;
+      }
+
+      Conexao::close();
+   }
+
+   }
+
+require_once "Matriz.php";
+require_once "Conexao.php";
+class MatrizDAO {
+   public static function insert (Matriz $matriz) { 
+      $con = Conexao::connect();
+
+      $nome = $matriz->getNome();
+      $ano = $matriz->getAno();
+      $id_curso = $matriz->getId_curso();
+      $sql = "INSERT INTO matriz (nome, ano, id_curso) VALUES ('$nome', '$ano', '$id_curso')";
+
+      $resultado = mysqli_query($con, $sql);
+      if(!$resultado) {echo mysqli_error ($con);} 
+
+      Conexao::close();
+   }
+
+   public static function update (Matriz $matriz) { 
+      $con = Conexao::connect();
+
+      $nome = $matriz->getNome();
+      $ano = $matriz->getAno();
+      $id_curso = $matriz->getId_curso();
+      $id_matriz = $matriz->getId_matriz();
+      $sql = "UPDATE matriz SET nome = '$nome', ano = '$ano', id_curso = '$id_curso' WHERE id_matriz = '$id_matriz'";
+
+      $resultado = mysqli_query($con, $sql);
+      if(!$resultado) {echo mysqli_error ($con);} 
+
+      Conexao::close();
+   }
+
+   public static function delete ($id_matriz) { 
+      $con = Conexao::connect();
+
+      $sql = "DELETE FROM matriz WHERE id_matriz = '$id_matriz'";
+
+      $resultado = mysqli_query($con, $sql);
+      if(!$resultado) {echo mysqli_error ($con);} 
+
+      Conexao::close();
+   }
+
+   public static function getAll () { 
+      $con = Conexao::connect();
+
+      $sql = "SELECT * FROM matriz";
+      $resultado = mysqli_query($con, $sql);
+      if(!$resultado) {echo mysqli_error ($con);} 
+      else {
+         $array = array();
+         while ($i = mysqli_fetch_array($resultado)) {
+            array_push($array, new Matriz($i['nome'], $i['ano'], $i['id_curso'], $i['id_matriz']));
+         }
+         return $array;
+      }
+
+      Conexao::close();
+   }
+
+   public static function getById ($id_matriz) { 
+      $con = Conexao::connect();
+
+      $sql = "SELECT * FROM matriz WHERE id_matriz = $id_matriz";
+      $resultado = mysqli_query($con, $sql);
+      if(!$resultado) {echo mysqli_error ($con);} 
+      else {
+         $i = mysqli_fetch_array($resultado)
+         $array = new Matriz($i['nome'], $i['ano'], $i['id_curso'], $i['id_matriz']);
          return $array;
       }
 
