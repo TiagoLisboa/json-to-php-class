@@ -1,13 +1,9 @@
-import generate_dictionary_from_object_files as generator
-import voParser as vo
+from lib import gen_dic as gen
+from lib import vo_parser as vo
 
-
-FILE_SOURCE = 'objects.txt'
+FILE_SOURCE = 'source/objects.txt'
 
 objects = open (FILE_SOURCE, 'r').read()
+file = gen.gen_dic(objects)
 
-file = generator.generate_dictionary (objects)
-
-# print(file)
-
-vo.gerarVO (file, "m")
+vo.gen_vo (file, "s")
